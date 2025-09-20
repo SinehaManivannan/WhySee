@@ -12,29 +12,30 @@ export default function FounderArchetypeSelector({ onBack }: FounderArchetypeSel
   const [displayText, setDisplayText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
   const [showPremium, setShowPremium] = useState(false);
+  const [showUnicornexus, setShowUnicornexus] = useState(false);
   const fullText = 'ANALYZING ENTREPRENEURIAL DNA...';
 
   const archetypes = [
     {
-      title: "THE_VISIONARY.exe",
-      description: "Sees opportunities others miss, always dreaming of the next big thing",
+      title: "DOSELORD.exe",
+      description: "College dropout minimalist monk who microdoses and codes until eyes bleed",
       code: "0x1A2B3C",
       status: "ACTIVE",
-      image: "/thevisionary.png"
+      image: "/doselord.png"
     },
     {
-      title: "THE_ENGINEER.exe", 
-      description: "Problem-solving genius who builds solutions with meticulous precision",
+      title: "FOUNDIGRANT.exe", 
+      description: "Immigrant hustler who denounces citizenship and builds trauma for resilience",
       code: "0x4D5E6F",
       status: "ACTIVE",
-      image: "/theengineer.png"
+      image: "/foundigrant.png"
     },
     {
-      title: "THE_HUSTLER.exe",
-      description: "Always closing deals, grinding 24/7, and making things happen",
+      title: "PITCHGREMLIN.exe",
+      description: "Couch-surfing conference clout chaser who practices 'DAU' every 30 seconds",
       code: "0x7G8H9I",
       status: "ACTIVE",
-      image: "/thehustler.png"
+      image: "/pitchgremlin.png"
     }
   ];
 
@@ -172,7 +173,7 @@ export default function FounderArchetypeSelector({ onBack }: FounderArchetypeSel
                 </div>
                 
                 <button 
-                  onClick={() => setShowPremium(true)}
+                  onClick={() => setShowUnicornexus(true)}
                   className="w-full px-6 py-3 bg-gradient-to-r from-pink-400 to-purple-500 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 mb-3"
                   style={{ fontFamily: 'Comic Sans MS, cursive' }}
                 >
@@ -203,9 +204,68 @@ export default function FounderArchetypeSelector({ onBack }: FounderArchetypeSel
           </div>
         </div>
 
-        {/* Premium Modal */}
-        {showPremium && (
-          <PremiumSection onClose={() => setShowPremium(false)} />
+        {/* Unicornexus Modal */}
+        {showUnicornexus && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-gradient-to-br from-purple-100 to-pink-100 rounded-3xl border-4 border-purple-300 shadow-2xl max-w-2xl w-full p-8 relative">
+              {/* Close button */}
+              <button 
+                onClick={() => setShowUnicornexus(false)}
+                className="absolute top-4 right-4 text-purple-600 hover:text-purple-800 text-2xl font-bold"
+                style={{ fontFamily: 'Comic Sans MS, cursive' }}
+              >
+                ✕
+              </button>
+              
+              <div className="text-center">
+                <div className="flex justify-center items-center mb-4">
+                  <span className="text-4xl mr-2">🦄</span>
+                  <span className="text-4xl mr-2">🌌</span>
+                  <span className="text-4xl mr-2">✨</span>
+                  <span className="text-4xl">👑</span>
+                </div>
+                
+                <h2 className="text-3xl font-bold text-purple-800 mb-4" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
+                  UNICORNEXUS.exe
+                </h2>
+                
+                <div className="mb-6">
+                  <img 
+                    src="/unicornexus.png" 
+                    alt="Unicornexus"
+                    className="w-64 h-64 object-contain rounded-2xl mx-auto mb-4"
+                  />
+                </div>
+                
+                <p className="text-lg text-purple-700 mb-6" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
+                  Legendary founder who sleeps 3 hours/night, microdoses LSD on flights, and raises $200M from SoftBank without showing a deck
+                </p>
+                
+                <div className="bg-white rounded-2xl p-6 mb-6 border-2 border-purple-300">
+                  <h3 className="text-xl font-bold text-purple-800 mb-3" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
+                    Check if you qualify
+                  </h3>
+                  <p className="text-purple-700 mb-4" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
+                    $500/month until your application gets reviewed
+                  </p>
+                  <p className="text-sm text-purple-600" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
+                    Usually around 2 months but could be up to 36 months
+                  </p>
+                </div>
+                
+                <button className="px-8 py-4 bg-gradient-to-r from-purple-400 to-pink-500 text-white font-bold text-xl rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 mb-4" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
+                  🌟 Apply for Unicornexus 🌟
+                </button>
+                
+                <div className="flex justify-center items-center">
+                  <span className="text-2xl mr-1">🦄</span>
+                  <span className="text-2xl mr-1">🌌</span>
+                  <span className="text-2xl mr-1">✨</span>
+                  <span className="text-2xl">👑</span>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
 
       </div>
