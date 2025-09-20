@@ -9,10 +9,9 @@ interface MembershipPortalProps {
     status: string;
     image: string;
   };
-  onBack: () => void;
 }
 
-export default function MembershipPortal({ archetype, onBack }: MembershipPortalProps) {
+export default function MembershipPortal({ archetype }: MembershipPortalProps) {
   const [displayText, setDisplayText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());

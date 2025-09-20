@@ -14,32 +14,8 @@ interface FounderPageProps {
 }
 
 export default function FounderPage({ archetype, onBack }: FounderPageProps) {
-  const [displayText, setDisplayText] = useState('');
-  const [showCursor, setShowCursor] = useState(true);
   const [showPortal, setShowPortal] = useState(false);
-  const fullText = 'INITIALIZING_LABAUBAU_PROTOCOL...';
 
-  useEffect(() => {
-    let index = 0;
-    const timer = setInterval(() => {
-      if (index < fullText.length) {
-        setDisplayText(fullText.slice(0, index + 1));
-        index++;
-      } else {
-        clearInterval(timer);
-      }
-    }, 80);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
-    const cursorTimer = setInterval(() => {
-      setShowCursor(prev => !prev);
-    }, 500);
-
-    return () => clearInterval(cursorTimer);
-  }, []);
 
   const handleAcceptLabaubau = () => {
     setShowPortal(true);
@@ -51,7 +27,7 @@ export default function FounderPage({ archetype, onBack }: FounderPageProps) {
 
   // Show membership portal if accepted
   if (showPortal) {
-    return <MembershipPortal archetype={archetype} onBack={handleBackFromPortal} />;
+    return <MembershipPortal archetype={archetype} />;
   }
 
   const getArchetypeActions = () => {
@@ -209,7 +185,7 @@ export default function FounderPage({ archetype, onBack }: FounderPageProps) {
                 </p>
                 <p>
                   <strong>Task Blocking:</strong> Until you complete required actions, the Labaubau 
-                  will stay on the webpage or app you're using, blocking you from continuing 
+                  will stay on the webpage or app you&apos;re using, blocking you from continuing 
                   with your daily tasks.
                 </p>
                 <p>

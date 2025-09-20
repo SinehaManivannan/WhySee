@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import PremiumSection from './PremiumSection';
 import FounderPage from './FounderPage';
 
 interface FounderArchetypeSelectorProps {
@@ -12,10 +11,14 @@ export default function FounderArchetypeSelector({ onBack }: FounderArchetypeSel
   const [selectedArchetype, setSelectedArchetype] = useState<number | null>(null);
   const [displayText, setDisplayText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
-  const [showPremium, setShowPremium] = useState(false);
   const [showUnicornexus, setShowUnicornexus] = useState(false);
   const [showPricing, setShowPricing] = useState(false);
-  const [selectedFounder, setSelectedFounder] = useState<any>(null);
+  const [selectedFounder, setSelectedFounder] = useState<{
+    title: string;
+    description: string;
+    status: string;
+    image: string;
+  } | null>(null);
   const fullText = 'ANALYZING ENTREPRENEURIAL DNA...';
 
   const archetypes = [
@@ -252,7 +255,7 @@ export default function FounderArchetypeSelector({ onBack }: FounderArchetypeSel
                             $4000 per month until you become a founder
                           </h3>
                           <p className="text-green-400 text-lg mb-4 font-mono">
-                            If you're not willing to take the risk you're not cut out for it
+                            If you&apos;re not willing to take the risk you&apos;re not cut out for it
                           </p>
                         </div>
                         
