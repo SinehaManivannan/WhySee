@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import PremiumSection from './PremiumSection';
+import FounderPage from './FounderPage';
 
 interface FounderArchetypeSelectorProps {
   onBack: () => void;
@@ -13,27 +14,26 @@ export default function FounderArchetypeSelector({ onBack }: FounderArchetypeSel
   const [showCursor, setShowCursor] = useState(true);
   const [showPremium, setShowPremium] = useState(false);
   const [showUnicornexus, setShowUnicornexus] = useState(false);
+  const [showPricing, setShowPricing] = useState(false);
+  const [selectedFounder, setSelectedFounder] = useState<any>(null);
   const fullText = 'ANALYZING ENTREPRENEURIAL DNA...';
 
   const archetypes = [
     {
-      title: "DOSELORD.exe",
-      description: "College dropout minimalist monk who microdoses and codes until eyes bleed",
-      code: "0x1A2B3C",
+      title: "DOSELORD",
+      description: "College dropout minimalist monk who microdoses and wears one of their two identical hoodies",
       status: "ACTIVE",
       image: "/doselord.png"
     },
     {
-      title: "FOUNDIGRANT.exe", 
+      title: "FOUNDIGRANT", 
       description: "Immigrant hustler who denounces citizenship and builds trauma for resilience",
-      code: "0x4D5E6F",
       status: "ACTIVE",
       image: "/foundigrant.png"
     },
     {
-      title: "PITCHGREMLIN.exe",
-      description: "Couch-surfing conference clout chaser who practices 'DAU' every 30 seconds",
-      code: "0x7G8H9I",
+      title: "PITCHGREMLIN",
+      description: "Couch-surfing conference clout chaser who thinks every convo is a pitch opportunity.",
       status: "ACTIVE",
       image: "/pitchgremlin.png"
     }
@@ -61,6 +61,24 @@ export default function FounderArchetypeSelector({ onBack }: FounderArchetypeSel
     return () => clearInterval(cursorTimer);
   }, []);
 
+  const handleArchetypeSelect = (index: number) => {
+    setSelectedArchetype(index);
+    // Navigate to founder page after a short delay
+    setTimeout(() => {
+      setSelectedFounder(archetypes[index]);
+    }, 1000);
+  };
+
+  const handleBackFromFounder = () => {
+    setSelectedFounder(null);
+    setSelectedArchetype(null);
+  };
+
+  // Show founder page if one is selected
+  if (selectedFounder) {
+    return <FounderPage archetype={selectedFounder} onBack={handleBackFromFounder} />;
+  }
+
   return (
     <div className="min-h-screen bg-black text-green-400 font-mono flex items-center justify-center relative overflow-hidden">
       {/* Glitch effect background */}
@@ -72,40 +90,42 @@ export default function FounderArchetypeSelector({ onBack }: FounderArchetypeSel
         </div>
       </div>
 
-      <div className="max-w-none mx-auto px-6 z-10 relative">
-        {/* Terminal header */}
-        <div className="mb-8 border border-cyan-400 p-4 bg-black/50 backdrop-blur-sm">
-          <div className="flex items-center mb-2">
-            <div className="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
-            <div className="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
-            <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
-            <span className="text-cyan-400 text-sm ml-4">FOUNDER_ANALYZER_v3.14</span>
-          </div>
-          <div className="text-cyan-400 text-sm">
-            {displayText}<span className={showCursor ? 'opacity-100' : 'opacity-0'}>█</span>
-          </div>
-        </div>
+              <div className="max-w-none mx-auto px-6 z-10 relative">
+                {/* Terminal header */}
+                <div className="mb-8 border border-cyan-400 p-4 bg-black/50 backdrop-blur-sm">
+                  <div className="flex items-center mb-2">
+                    <div className="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
+                    <div className="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
+                    <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                    <span className="text-cyan-400 text-sm ml-4">FOUNDER_ANALYZER_v3.14</span>
+                  </div>
+                  <div className="text-cyan-400 text-sm">
+                    {displayText}<span className={showCursor ? 'opacity-100' : 'opacity-0'}>█</span>
+                  </div>
+                </div>
 
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Left side - Main content */}
-          <div className="flex-1 w-full">
-            <h1 className="text-5xl font-bold text-cyan-400 mb-6 tracking-wider text-center lg:text-left">
-              &gt; FOUNDER_MATRIX
+        <div className="w-full">
+          <div className="flex items-center justify-center gap-8 mb-6">
+            <h1 className="text-5xl font-bold text-cyan-400 tracking-wider">
+              &gt; Choose your founder
             </h1>
-            
-            <p className="text-cyan-300 text-xl mb-4 font-light text-center lg:text-left">
-              Choose your founder archetype
-            </p>
-            
-            <p className="text-cyan-300 text-lg mb-8 animate-pulse text-center lg:text-left">
-              [SYSTEM] Choose your path to becoming a billionaire
-            </p>
+            <button 
+              onClick={() => setShowPricing(true)}
+              className="px-4 py-2 bg-transparent border border-cyan-400 text-cyan-400 font-mono text-sm hover:bg-cyan-400 hover:text-black transition-all duration-300"
+            >
+              PRICING
+            </button>
+          </div>
+          
+          <p className="text-cyan-300 text-lg mb-8 animate-pulse text-center">
+            [SYSTEM] Choose your path to becoming a billionaire
+          </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mb-2 w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 mb-2 w-full">
               {archetypes.map((archetype, index) => (
                 <button 
                   key={index}
-                  onClick={() => setSelectedArchetype(index)}
+                  onClick={() => handleArchetypeSelect(index)}
                   className={`group relative p-2 bg-transparent border-2 transition-all duration-300 transform hover:scale-105 w-full ${
                     selectedArchetype === index 
                       ? 'border-cyan-400 bg-cyan-400/10 shadow-lg shadow-cyan-400/50' 
@@ -120,9 +140,6 @@ export default function FounderArchetypeSelector({ onBack }: FounderArchetypeSel
                     <p className="text-green-300 text-lg mb-0 leading-tight" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
                       {archetype.description}
                     </p>
-                    <span className="text-green-400 text-sm font-mono">
-                      {archetype.code}
-                    </span>
                   </div>
 
                   {/* Massive Archetype Image - Main Focus */}
@@ -157,116 +174,185 @@ export default function FounderArchetypeSelector({ onBack }: FounderArchetypeSel
                   </div>
                 </button>
               ))}
-            </div>
+              
+              {/* Premium Card - 4th Position */}
+              <button 
+                onClick={() => setShowUnicornexus(true)}
+                className="group relative p-2 bg-gradient-to-br from-pink-100 to-purple-100 border-2 border-pink-300 transition-all duration-300 transform hover:scale-105 w-full"
+              >
+                {/* Premium Description */}
+                <div className="text-center mb-0">
+                  <h3 className="text-2xl font-bold text-purple-800 mb-0" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
+                    PREMIUM
+                  </h3>
+                  <p className="text-purple-700 text-lg mb-0 leading-tight" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
+                    More Cost + More Reward with WhySee Premium
+                  </p>
+                </div>
 
+                {/* Premium Image/Content */}
+                <div className="flex justify-center mb-0">
+                  <div className="w-96 h-96 bg-gradient-to-br from-pink-200 to-purple-200 rounded-2xl flex flex-col items-center justify-center">
+                    <div className="flex justify-center items-center mb-4">
+                      <span className="text-6xl mr-2">🌸</span>
+                      <span className="text-6xl mr-2">✨</span>
+                      <span className="text-6xl mr-2">💖</span>
+                      <span className="text-6xl">🦄</span>
+                    </div>
+                          <div className="text-center">
+                            <span className="text-2xl font-bold text-purple-800" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
+                              Click to see what premium gives you
+                            </span>
+                          </div>
+                  </div>
+                </div>
+                
+                <div className="text-center mt-0">
+                  <div className="flex items-center justify-center">
+                    <span className="text-purple-600 text-sm" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
+                      STATUS: EXCLUSIVE
+                    </span>
+                  </div>
+                </div>
+              </button>
           </div>
 
-          {/* Right side - Premium Button */}
-          <div className="lg:w-80 flex-shrink-0">
-            <div className="sticky top-8">
-              <div className="p-6 bg-gradient-to-br from-pink-100 to-purple-100 rounded-2xl border-2 border-pink-300 shadow-lg">
-                <div className="flex justify-center items-center mb-3">
-                  <span className="text-2xl mr-1">🌸</span>
-                  <span className="text-2xl mr-1">✨</span>
-                  <span className="text-2xl mr-1">💖</span>
-                  <span className="text-2xl">🦄</span>
-                </div>
-                
-                <button 
-                  onClick={() => setShowUnicornexus(true)}
-                  className="w-full px-6 py-3 bg-gradient-to-r from-pink-400 to-purple-500 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 mb-3"
-                  style={{ fontFamily: 'Comic Sans MS, cursive' }}
-                >
-                  🌟 More Cost + More Reward 🌟
-                </button>
-                
-                <p className="text-purple-700 text-sm text-center" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
-                  Crave something a little more hardcore? 💕
-                </p>
-                
-                <div className="flex justify-center items-center mt-2">
-                  <span className="text-lg mr-1">🌺</span>
-                  <span className="text-lg mr-1">🌼</span>
-                  <span className="text-lg">🌻</span>
-                </div>
-              </div>
-              
-              {/* Terminate Session Button moved here */}
-              <div className="mt-6 text-center">
-                <button 
-                  onClick={onBack}
-                  className="px-6 py-3 bg-transparent border border-red-400 text-red-400 font-mono hover:bg-red-400 hover:text-black transition-all duration-300"
-                >
-                  &lt; TERMINATE_SESSION
-                </button>
-              </div>
-            </div>
+          {/* Terminate Session Button */}
+          <div className="text-center mt-8">
+            <button 
+              onClick={onBack}
+              className="px-6 py-3 bg-transparent border border-red-400 text-red-400 font-mono hover:bg-red-400 hover:text-black transition-all duration-300"
+            >
+              &lt; TERMINATE_SESSION
+            </button>
           </div>
         </div>
 
-        {/* Unicornexus Modal */}
-        {showUnicornexus && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <div className="bg-gradient-to-br from-purple-100 to-pink-100 rounded-3xl border-4 border-purple-300 shadow-2xl max-w-2xl w-full p-8 relative">
-              {/* Close button */}
-              <button 
-                onClick={() => setShowUnicornexus(false)}
-                className="absolute top-4 right-4 text-purple-600 hover:text-purple-800 text-2xl font-bold"
-                style={{ fontFamily: 'Comic Sans MS, cursive' }}
-              >
-                ✕
-              </button>
-              
-              <div className="text-center">
-                <div className="flex justify-center items-center mb-4">
-                  <span className="text-4xl mr-2">🦄</span>
-                  <span className="text-4xl mr-2">🌌</span>
-                  <span className="text-4xl mr-2">✨</span>
-                  <span className="text-4xl">👑</span>
-                </div>
-                
-                <h2 className="text-3xl font-bold text-purple-800 mb-4" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
-                  UNICORNEXUS.exe
-                </h2>
-                
-                <div className="mb-6">
-                  <img 
-                    src="/unicornexus.png" 
-                    alt="Unicornexus"
-                    className="w-64 h-64 object-contain rounded-2xl mx-auto mb-4"
-                  />
-                </div>
-                
-                <p className="text-lg text-purple-700 mb-6" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
-                  Legendary founder who sleeps 3 hours/night, microdoses LSD on flights, and raises $200M from SoftBank without showing a deck
-                </p>
-                
-                <div className="bg-white rounded-2xl p-6 mb-6 border-2 border-purple-300">
-                  <h3 className="text-xl font-bold text-purple-800 mb-3" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
-                    Check if you qualify
-                  </h3>
-                  <p className="text-purple-700 mb-4" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
-                    $500/month until your application gets reviewed
-                  </p>
-                  <p className="text-sm text-purple-600" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
-                    Usually around 2 months but could be up to 36 months
-                  </p>
-                </div>
-                
-                <button className="px-8 py-4 bg-gradient-to-r from-purple-400 to-pink-500 text-white font-bold text-xl rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 mb-4" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
-                  🌟 Apply for Unicornexus 🌟
-                </button>
-                
-                <div className="flex justify-center items-center">
-                  <span className="text-2xl mr-1">🦄</span>
-                  <span className="text-2xl mr-1">🌌</span>
-                  <span className="text-2xl mr-1">✨</span>
-                  <span className="text-2xl">👑</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+                {/* Pricing Modal */}
+                {showPricing && (
+                  <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+                    <div className="bg-black border-2 border-cyan-400 rounded-lg shadow-2xl max-w-2xl w-full p-8 relative">
+                      {/* Close button */}
+                      <button 
+                        onClick={() => setShowPricing(false)}
+                        className="absolute top-4 right-4 text-cyan-400 hover:text-cyan-300 text-2xl font-bold font-mono"
+                      >
+                        ✕
+                      </button>
+                      
+                      <div className="text-center">
+                        <div className="mb-6">
+                          <h2 className="text-3xl font-bold text-cyan-400 mb-4 font-mono">
+                            &gt; PRICING STRUCTURE
+                          </h2>
+                        </div>
+                        
+                        <div className="bg-black/50 border border-cyan-400 rounded-lg p-6 mb-6">
+                          <h3 className="text-2xl font-bold text-cyan-400 mb-4 font-mono">
+                            $4000 per month until you become a founder
+                          </h3>
+                          <p className="text-green-400 text-lg mb-4 font-mono">
+                            If you're not willing to take the risk you're not cut out for it
+                          </p>
+                        </div>
+                        
+                        <div className="bg-red-900/20 border border-red-400 rounded-lg p-6 mb-6">
+                          <h3 className="text-xl font-bold text-red-400 mb-3 font-mono">
+                            ⚠️ WARNING: NO CANCELLATION
+                          </h3>
+                          <p className="text-red-300 font-mono">
+                            Do not expect to cancel anytime
+                          </p>
+                        </div>
+                        
+                        <div className="bg-yellow-900/20 border border-yellow-400 rounded-lg p-6 mb-6">
+                          <h3 className="text-xl font-bold text-yellow-400 mb-3 font-mono">
+                            FOUNDER CRITERIA
+                          </h3>
+                          <p className="text-yellow-300 mb-2 font-mono">
+                            To be considered a founder:
+                          </p>
+                          <ul className="text-yellow-300 text-left font-mono space-y-2">
+                            <li>• 5 out of 10 people questioned at a random SF hackathon have to know what your startup is</li>
+                            <li>• You need to show proof of min 10,000 X followers</li>
+                            <li>• You need to show proof of min 20,000 LinkedIn followers</li>
+                          </ul>
+                        </div>
+                        
+                        <button 
+                          onClick={() => setShowPricing(false)}
+                          className="px-8 py-4 bg-transparent border-2 border-cyan-400 text-cyan-400 font-mono text-lg hover:bg-cyan-400 hover:text-black transition-all duration-300"
+                        >
+                          &gt; ACKNOWLEDGED
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Unicornexus Modal */}
+                {showUnicornexus && (
+                  <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+                    <div className="bg-gradient-to-br from-purple-100 to-pink-100 rounded-3xl border-4 border-purple-300 shadow-2xl max-w-2xl w-full p-8 relative">
+                      {/* Close button */}
+                      <button 
+                        onClick={() => setShowUnicornexus(false)}
+                        className="absolute top-4 right-4 text-purple-600 hover:text-purple-800 text-2xl font-bold"
+                        style={{ fontFamily: 'Comic Sans MS, cursive' }}
+                      >
+                        ✕
+                      </button>
+                      
+                      <div className="text-center">
+                        <div className="flex justify-center items-center mb-4">
+                          <span className="text-4xl mr-2">🦄</span>
+                          <span className="text-4xl mr-2">🌌</span>
+                          <span className="text-4xl mr-2">✨</span>
+                          <span className="text-4xl">👑</span>
+                        </div>
+                        
+                        <h2 className="text-3xl font-bold text-purple-800 mb-4" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
+                          UNICORNEXUS
+                        </h2>
+                        
+                        <div className="mb-6">
+                          <img 
+                            src="/unicornexus.png" 
+                            alt="Unicornexus"
+                            className="w-64 h-64 object-contain rounded-2xl mx-auto mb-4"
+                          />
+                        </div>
+                        
+                        <p className="text-lg text-purple-700 mb-6" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
+                          Legendary founder who sleeps 3 hours/night, microdoses LSD on flights, and raises $200M from SoftBank without showing a deck
+                        </p>
+                        
+                        <div className="bg-white rounded-2xl p-6 mb-6 border-2 border-purple-300">
+                          <h3 className="text-xl font-bold text-purple-800 mb-3" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
+                            Check if you qualify
+                          </h3>
+                          <p className="text-purple-700 mb-4" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
+                            $500/month until your application gets reviewed
+                          </p>
+                          <p className="text-sm text-purple-600" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
+                            Usually around 2 months but could be up to 36 months
+                          </p>
+                        </div>
+                        
+                        <button className="px-8 py-4 bg-gradient-to-r from-purple-400 to-pink-500 text-white font-bold text-xl rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 mb-4" style={{ fontFamily: 'Comic Sans MS, cursive' }}>
+                          🌟 Apply for Unicornexus 🌟
+                        </button>
+                        
+                        <div className="flex justify-center items-center">
+                          <span className="text-2xl mr-1">🦄</span>
+                          <span className="text-2xl mr-1">🌌</span>
+                          <span className="text-2xl mr-1">✨</span>
+                          <span className="text-2xl">👑</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
       </div>
     </div>
