@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import MembershipPortal from './MembershipPortal';
 
 interface FounderPageProps {
   archetype: {
@@ -15,6 +16,7 @@ interface FounderPageProps {
 export default function FounderPage({ archetype, onBack }: FounderPageProps) {
   const [displayText, setDisplayText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
+  const [showPortal, setShowPortal] = useState(false);
   const fullText = 'INITIALIZING_LABAUBAU_PROTOCOL...';
 
   useEffect(() => {
@@ -38,6 +40,19 @@ export default function FounderPage({ archetype, onBack }: FounderPageProps) {
 
     return () => clearInterval(cursorTimer);
   }, []);
+
+  const handleAcceptLabaubau = () => {
+    setShowPortal(true);
+  };
+
+  const handleBackFromPortal = () => {
+    setShowPortal(false);
+  };
+
+  // Show membership portal if accepted
+  if (showPortal) {
+    return <MembershipPortal archetype={archetype} onBack={handleBackFromPortal} />;
+  }
 
   const getArchetypeActions = () => {
     switch (archetype.title) {
@@ -118,6 +133,7 @@ export default function FounderPage({ archetype, onBack }: FounderPageProps) {
                   &lt; BACK_TO_SELECTION
                 </button>
                 <button 
+                  onClick={handleAcceptLabaubau}
                   className="px-8 py-4 bg-transparent border-2 border-green-400 text-green-400 font-mono text-lg hover:bg-green-400 hover:text-black transition-all duration-300 transform hover:scale-105"
                 >
                   &gt; ACCEPT_LABAUBAU

@@ -56,7 +56,7 @@ export default function WhySee() {
       
       <div className="text-center z-10 relative">
         {/* Terminal-style header */}
-        <div className="mb-8 border border-green-400 p-4 bg-black/50 backdrop-blur-sm">
+        <div className="mb-6 border border-green-400 p-4 bg-black/50 backdrop-blur-sm">
           <div className="flex items-center mb-2">
             <div className="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
             <div className="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
@@ -68,14 +68,26 @@ export default function WhySee() {
           </div>
         </div>
 
+        {/* Banner */}
+        <div className="mb-8 bg-green-400/10 border border-green-400 p-3">
+          <p className="text-green-300 text-sm font-mono">
+            There are many Startup Accelerators. WhySee is a Founder Accelerator.
+          </p>
+        </div>
+
         {/* Main content */}
         <div className="space-y-6">
           <h1 className="text-6xl font-bold text-green-400 mb-4 tracking-wider">
             &gt; WHYSEE
           </h1>
           
-          <div className="text-green-300 text-2xl mb-8">
+          <div className="text-green-300 text-2xl mb-4">
             <p className="font-light">Make something people want.</p>
+          </div>
+          
+          
+          <div className="text-green-400 text-lg mb-8 font-bold">
+            <p>Now accepting payment for the Winter 2026 batch.</p>
           </div>
           
           <div className="text-green-300 text-lg space-y-2">
