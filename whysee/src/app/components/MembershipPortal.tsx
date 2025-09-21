@@ -229,13 +229,13 @@ export default function MembershipPortal({ archetype }: MembershipPortalProps) {
                             {archetype.title === 'FOUNDIGRANT' && step.id === 1 ? 'BLACK' : completedSteps.has(step.id) ? 'DONE' : 'TODO'}
                           </span>
                         </div>
-                        <p className={`text-xs font-mono leading-tight ${
-                          archetype.title === 'FOUNDIGRANT' && step.id === 1
-                            ? 'text-gray-600'
-                            : completedSteps.has(step.id) 
-                            ? 'text-green-300 line-through opacity-70' 
-                            : 'text-gray-300'
-                        }`}>
+                              <p className={`text-xs font-mono leading-tight ${
+                                archetype.title === 'FOUNDIGRANT' && step.id === 1
+                                  ? 'text-black'
+                                  : completedSteps.has(step.id) 
+                                  ? 'text-green-300 line-through opacity-70' 
+                                  : 'text-gray-300'
+                              }`}>
                           {step.action}
                         </p>
                       </div>
