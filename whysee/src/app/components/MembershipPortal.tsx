@@ -202,37 +202,29 @@ export default function MembershipPortal({ archetype }: MembershipPortalProps) {
                     
                     {/* Timeline content */}
                     <div className="text-center">
-                      <div className={`p-3 rounded-lg border transition-all duration-300 ${
-                        archetype.title === 'FOUNDIGRANT' && step.id === 1
-                          ? 'bg-black border-gray-800'
-                          : completedSteps.has(step.id)
-                          ? 'bg-green-900/20 border-green-400'
-                          : 'bg-gray-900/20 border-gray-600'
-                      }`}>
+                            <div className={`p-3 rounded-lg border transition-all duration-300 ${
+                              completedSteps.has(step.id)
+                                ? 'bg-green-900/20 border-green-400'
+                                : 'bg-gray-900/20 border-gray-600'
+                            }`}>
                         <div className="mb-2">
                           <span className={`text-xs font-mono font-bold ${
-                            archetype.title === 'FOUNDIGRANT' && step.id === 1
-                              ? 'text-gray-600'
-                              : completedSteps.has(step.id) ? 'text-green-300' : 'text-gray-400'
+                            completedSteps.has(step.id) ? 'text-green-300' : 'text-gray-400'
                           }`}>
                             PHASE {step.id.toString().padStart(2, '0')}
                           </span>
                         </div>
                         <div className="mb-2">
                           <span className={`text-xs px-2 py-1 rounded-full font-mono ${
-                            archetype.title === 'FOUNDIGRANT' && step.id === 1
-                              ? 'bg-gray-800 text-gray-500'
-                              : completedSteps.has(step.id)
+                            completedSteps.has(step.id)
                               ? 'bg-green-400 text-black'
                               : 'bg-gray-600 text-gray-300'
                           }`}>
-                            {archetype.title === 'FOUNDIGRANT' && step.id === 1 ? 'BLACK' : completedSteps.has(step.id) ? 'DONE' : 'TODO'}
+                            {completedSteps.has(step.id) ? 'DONE' : 'TODO'}
                           </span>
                         </div>
                               <p className={`text-xs font-mono leading-tight ${
-                                archetype.title === 'FOUNDIGRANT' && step.id === 1
-                                  ? 'text-black'
-                                  : completedSteps.has(step.id) 
+                                completedSteps.has(step.id) 
                                   ? 'text-green-300 line-through opacity-70' 
                                   : 'text-gray-300'
                               }`}>
