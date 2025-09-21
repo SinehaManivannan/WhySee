@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import MembershipPortal from './MembershipPortal';
+import LabaubauPopup from './LabaubauPopup';
 
 interface FounderPageProps {
   archetype: {
@@ -15,15 +16,26 @@ interface FounderPageProps {
 
 export default function FounderPage({ archetype, onBack }: FounderPageProps) {
   const [showPortal, setShowPortal] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
 
   const handleAcceptLabaubau = () => {
+    setShowPopup(true);
+  };
+
+  const handlePopupContinue = () => {
+    setShowPopup(false);
     setShowPortal(true);
   };
 
   const handleBackFromPortal = () => {
     setShowPortal(false);
   };
+
+  // Show popup first
+  if (showPopup) {
+    return <LabaubauPopup onContinue={handlePopupContinue} />;
+  }
 
   // Show membership portal if accepted
   if (showPortal) {
